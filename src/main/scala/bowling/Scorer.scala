@@ -37,9 +37,9 @@ object Scorer {
   def calculate(frames: Seq[Frame]): Int = {
     frames match {
       case Nil    => 0
-      case `strike`::tail if tail.length > 0 => 10 + getRolls(tail, 2) + calculate(tail)
-      case frame::tail    if isSpare(frame)  => 10 + getRolls(tail, 1) + calculate(tail)
-      case frame::tail                       => frame.sum              + calculate(tail)
+      case `strike`::tail if tail.nonEmpty  => 10 + getRolls(tail, 2) + calculate(tail)
+      case frame::tail    if isSpare(frame) => 10 + getRolls(tail, 1) + calculate(tail)
+      case frame::tail                      => frame.sum              + calculate(tail)
     }
   }
 }
