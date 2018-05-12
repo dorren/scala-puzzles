@@ -34,6 +34,16 @@ object NumberToWords {
     }
   }
 
+  /**
+    * break down the number into quotient part and remainder around the keyNum.
+    * for example, if number is 234, and keyNum is 100, divide number to 200 and 34,
+    * and translate each part.
+    *
+    * @param num
+    * @param keyNum
+    * @param partial
+    * @return
+    */
   private def process(num: Long, keyNum: Long, partial: Boolean = false): String = {
     if(num < keyNum){
       convert(num, partial)
