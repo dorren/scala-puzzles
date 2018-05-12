@@ -24,13 +24,13 @@ object NumberToWords {
     */
   def convert(num: Long, partial:Boolean = false): String = {
     num match {
-      case 0 if partial            => null
-      case x if x < 20L            => convMap(num)
-      case x if x < 100L           => do2digits(x)
-      case x if x < 1000L          => do3digits(x)
-      case x if x < 1000000L       => do6digits(x)
-      case x if x < 1000000000L    => do9digits(x)
-      case x if x < 1000000000000L => do12digits(x)
+      case 0 if partial         => null
+      case x if x < 20L         => convMap(num)
+      case x if x < 100L        => do2digits(x)
+      case x if x < 1000L       => do3digits(x)
+      case x if x < 1000000L    => do6digits(x)
+      case x if x < 1000000000L => do9digits(x)
+      case x                    => do12digits(x)
     }
   }
 
