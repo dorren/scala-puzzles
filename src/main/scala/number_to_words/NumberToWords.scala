@@ -26,39 +26,17 @@ object NumberToWords {
     num match {
       case 0 if partial         => null
       case x if x < 20L         => convMap(num)
-      case x if x < 100L        => do2digits(x)
-      case x if x < 1000L       => do3digits(x)
-      case x if x < 1000000L    => do6digits(x)
-      case x if x < 1000000000L => do9digits(x)
-      case x                    => do12digits(x)
+      case x if x < 100L        => process(num, 10, partial)
+      case x if x < 1000L       => process(num, 100, partial)
+      case x if x < 1000000L    => process(num, 1000, partial)
+      case x if x < 1000000000L => process(num, 1000000, partial)
+      case x                    => process(num, 1000000000, partial)
     }
   }
 
-  def do2digits(num: Long, partial: Boolean = false): String = {
-    process(num, 10, convert, partial)
-  }
-
-  def do3digits(num: Long, partial: Boolean = false): String = {
-    process(num, 100, do2digits, partial)
-  }
-
-  def do6digits(num: Long, partial: Boolean = false): String = {
-    process(num, 1000, do3digits, partial)
-  }
-
-  def do9digits(num: Long, partial: Boolean = false): String = {
-    process(num, 1000000, do6digits, partial)
-  }
-
-  def do12digits(num: Long, partial: Boolean = false): String = {
-    process(num, 1000000000, do9digits, partial)
-  }
-
-  private def process(num: Long, keyNum: Long,
-                      nextFn: (Long, Boolean) => String,
-                      partial: Boolean = false): String = {
+  private def process(num: Long, keyNum: Long, partial: Boolean = false): String = {
     if(num < keyNum){
-      nextFn(num, partial)
+      convert(num, partial)
     }else {
       val remainder = num % keyNum
       val quotient_num = num - remainder
@@ -69,7 +47,7 @@ object NumberToWords {
                           else
                             convert(quotient, true) + " " + convMap(keyNum)
 
-      Seq(quotient_word, nextFn(remainder, true))
+      Seq(quotient_word, convert(remainder, true))
         .filter(_ != null)
         .mkString(" ")
     }
