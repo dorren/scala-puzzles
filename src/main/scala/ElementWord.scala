@@ -31,7 +31,11 @@ object ElementWord {
     }
   }
 
-  def splitSolve(word: String, split_index: Int = 1): Seq[Solution] = {
+  /**
+    * split off first 1 or 2 letters of the word, then look up the head symbol
+    * and solve the tail.
+    */
+  def splitWord(word: String, split_index: Int = 1): Seq[Solution] = {
     val (head, tail) = word.splitAt(split_index)
     val head_sym = getElement(head)
 
@@ -48,8 +52,8 @@ object ElementWord {
   def solve(word: String): Seq[Solution] = {
     word.length match {
       case 0 => Seq(Seq.empty)
-      case 1 => splitSolve(word)
-      case n => splitSolve(word) ++ splitSolve(word, 2)
+      case 1 => splitWord(word)
+      case n => splitWord(word) ++ splitWord(word, 2)
     }
   }
 }
