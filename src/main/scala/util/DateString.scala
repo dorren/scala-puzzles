@@ -2,7 +2,7 @@ package util
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
+import util.IncrementorImpl.localdate
 
 /**
   * convenience class for yyyyMMdd formatted string
@@ -13,12 +13,11 @@ import java.time.format.DateTimeFormatter
   *   DateString(str).toString    => "20180513"
   *   DateString(str).toLocalDate => LocalDate.of(2018, 5, 13)
   */
-case class DateString(str: String) extends Incrementor[DateString]{
+case class DateString(str: String) extends OrderedIncrementor[DateString]{
   override def next(): DateString = {
-    import util.IncrementorImpl.localdate
-
     val day2 = toLocalDate().next()
     val day2str = DateString.toString(day2)
+
     DateString(day2str)
   }
 
@@ -27,6 +26,10 @@ case class DateString(str: String) extends Incrementor[DateString]{
   }
 
   override def toString: String = str
+
+  override def compare(that: DateString): Int = {
+    toLocalDate().compare(that.toLocalDate())
+  }
 }
 
 object DateString {

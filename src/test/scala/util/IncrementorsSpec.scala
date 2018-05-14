@@ -36,6 +36,13 @@ class IncrementorsSpec extends FlatSpec with Matchers{
     assert(getNext(dateStr) == DateString("20180513"))
   }
 
+  "it" should "compare" in {
+    assert(1 <= 2)
+    assert("a" < "b")
+    assert(LocalDate.of(2018, 5, 13) < LocalDate.of(2018, 5, 14))
+    assert(DateString("20180513") < DateString("20180514"))
+  }
+
   "it" should "work for CLI app" in {
     /**
       * spark-submit --class com.corp.myApp myApp.jar \
@@ -52,21 +59,28 @@ class IncrementorsSpec extends FlatSpec with Matchers{
       *   -- inputType Int
       */
 
+    def getNext[T](src: Incrementor[T]): T = src.next()
+
+
+    def traverse[T](from: Incrementor[T], to: Incrementor[T])= {
+      var current = from
+//      while (from <= to){
+//        // etl.process(folder)
+//        current = getNext(from)
+//      }
+    }
+
+
     def main(args: Array[String]) = {
       val from      = "fromValue"  // extracted from args somehow
       val to        = "toValue"
       val inputType = "typeValue"
 
-      var folder = inputType match {
-        case "DateString" => DateString(from)
-        case "Int"        => from.toInt
-        case _            => from
+      inputType match {
+        case "DateString" => traverse(DateString(from), DateString(to))
+        case "Int"        => traverse(from.toInt, to.toInt)
+        case y: String    => traverse(from, to)
       }
-
-      // while (folder <= to){
-      //   etl.process(folder)
-      //   folder = folder.next
-      // }
     }
   }
 }

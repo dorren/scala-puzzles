@@ -11,6 +11,8 @@ trait Incrementor[T] {
   def next(): T = ???
 }
 
+trait OrderedIncrementor[T] extends Incrementor[T] with Ordered[T]
+
 
 object IncrementorImpl {
   implicit def numeric(n: Int) = {
@@ -20,9 +22,17 @@ object IncrementorImpl {
   }
 
   implicit def localdate(date: LocalDate) = {
-    new Incrementor[LocalDate] {
+    new OrderedIncrementor[LocalDate] {
       override def next(): LocalDate = {
         date.plusDays(1)
+      }
+      override def compare(that: LocalDate): Int = {
+        if(date.isBefore(that))
+          -1
+        else if(date.isAfter(that))
+          1
+        else
+          0
       }
     }
   }
