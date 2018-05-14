@@ -32,5 +32,6 @@ class ElementWordSpec extends FlatSpec with Matchers{
     assert(ElementWord.solve("Rob")    == emptySln)
     assert(ElementWord.solve("Noam")   == List(List("(N) Nitrogen", "(O) Oxygen", "(Am) Americium"),
                                                List("(No) Nobelium", "(Am) Americium")))
+    assert(ElementWord.solve("Pavel")  == emptySln)
   }
 }

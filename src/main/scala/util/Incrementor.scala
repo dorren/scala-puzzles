@@ -40,7 +40,7 @@ object IncrementorImpl {
           if(s.isEmpty)
             return "a"
 
-          val (head, tail) = s.splitAt(s.length - 1)
+          val (head, tail) = s.splitAt(s.length - 1)  // split off last char
           val tail_char = tail.charAt(0)
 
           tail_char match {

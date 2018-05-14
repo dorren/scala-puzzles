@@ -45,12 +45,28 @@ class IncrementorsSpec extends FlatSpec with Matchers{
       *   -- inputType DateString
       *
       *
-      *   spark-submit --class com.corp.myApp myApp.jar \
-      *   -- s3_input s3a://my-bucket/201802            \
-      *   -- from 1                                     \
-      *   -- to   5                                     \
+      * spark-submit --class com.corp.myApp myApp.jar \
+      *   -- s3_input s3a://my-bucket/201802          \
+      *   -- from 1                                   \
+      *   -- to   5                                   \
       *   -- inputType Int
       */
 
+    def main(args: Array[String]) = {
+      val from      = "fromValue"  // extracted from args somehow
+      val to        = "toValue"
+      val inputType = "typeValue"
+
+      var folder = inputType match {
+        case "DateString" => DateString(from)
+        case "Int"        => from.toInt
+        case _            => from
+      }
+
+      // while (folder <= to){
+      //   etl.process(folder)
+      //   folder = folder.next
+      // }
+    }
   }
 }
