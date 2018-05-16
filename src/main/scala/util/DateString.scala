@@ -9,6 +9,8 @@ import util.IncrementorImpl.localdate
   *
   *   val str = "20180513"
   *
+  *   DateString(str) < DateString("20180515")  => true
+  *
   *   DateString(str).next        => DateString("20180514")
   *   DateString(str).toString    => "20180513"
   *   DateString(str).toLocalDate => LocalDate.of(2018, 5, 13)

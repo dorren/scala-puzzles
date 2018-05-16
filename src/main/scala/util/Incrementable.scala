@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.util.Date
 
 /**
-  * trait for incrementing variety type of objects, number, date, char, etc.
+  * trait for incrementing variety type of objects, number, date, String, etc.
   *
   */
 trait Incrementable[T] {
