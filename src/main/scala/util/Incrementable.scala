@@ -8,9 +8,23 @@ import java.util.Date
   *
   */
 trait Incrementable[T] {
+  /**
+    *   1.next => 2
+    *   "a".next => "b"
+    *   LocalDate.of(2018, 5, 13).next => LocalDate.of(2018, 5, 14)
+    */
   def next(): T = ???
+
+  /**
+    *   1.upTo(3) => Seq(1,2,3)
+    *   "a".upTo("c") => Seq("a", "b", "c")
+    */
+  def upTo(that: T): Seq[T] = ???
 }
 
+/**
+  * To be extended by classes that doesn't support Ordered[T].
+  */
 trait OrderedIncrementable[T] extends Incrementable[T] with Ordered[T]
 
 
