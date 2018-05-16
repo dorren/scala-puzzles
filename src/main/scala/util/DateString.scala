@@ -34,8 +34,6 @@ case class DateString(str: String) extends OrderedIncrementable[DateString]{
   }
 
   protected override def get(): DateString = this
-
-  protected override def lt(a: DateString, b: DateString): Boolean = a.compare(b) < 0
 }
 
 object DateString {

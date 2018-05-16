@@ -20,20 +20,19 @@ trait Incrementable[T] {
     *   1.upTo(3) => Seq(1,2,3)
     *   "a".upTo("c") => Seq("a", "b", "c")
     */
-  def upTo(that: T)(implicit conv: T => Incrementable[T]): Seq[T] = {
+  def upTo(that: T)(implicit ev1: T => Incrementable[T],
+                             ev2: T => Ordered[T]): Seq[T] = {
+    
     var current = get()
     var result = Seq(current)
 
-    while (lt(current, that)){
-      current = current.next()
+    while (current < that){        // <      is from ev2
+      current = current.next()     // next() is from ev1
       result = result :+ current
     }
 
     result
   }
-
-  // used in upTo(), check if a < b
-  protected def lt(a: T, b: T): Boolean = ???
 
   // used in upTo(), get current [T] type value
   protected def get(): T = ???
@@ -51,7 +50,6 @@ object IncrementorImpl {
       override def next(): Int = n + 1
 
       override def get(): Int = n
-      override def lt(a: Int, b: Int): Boolean = a < b
     }
   }
 
@@ -97,8 +95,6 @@ object IncrementorImpl {
       }
 
       override def get(): String = str
-
-      override def lt(a: String, b: String): Boolean = a < b
     }
   }
 }
