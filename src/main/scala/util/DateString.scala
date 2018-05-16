@@ -30,6 +30,10 @@ case class DateString(str: String) extends OrderedIncrementable[DateString]{
   override def compare(that: DateString): Int = {
     toLocalDate().compare(that.toLocalDate())
   }
+
+  protected override def get(): DateString = this
+
+  protected override def lt(a: DateString, b: DateString): Boolean = a.compare(b) < 0
 }
 
 object DateString {

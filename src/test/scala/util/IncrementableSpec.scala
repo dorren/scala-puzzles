@@ -11,9 +11,8 @@ class IncrementableSpec extends FlatSpec with Matchers{
     assert(1.next == 2)
   }
 
-  "it" should "increment date" in {
-    assert(LocalDate.of(2018, 5, 12).next == LocalDate.of(2018, 5, 13))
-    assert(LocalDate.of(2018, 5, 31).next == LocalDate.of(2018, 6, 1))
+  "it" should "upto int" in {
+    assert(1.upTo(3) == Seq(1,2,3))
   }
 
   "it" should "increment string" in {
@@ -21,6 +20,33 @@ class IncrementableSpec extends FlatSpec with Matchers{
     assert("z".next == "aa")
     assert("az".next == "ba")
     assert("zz".next == "aaa")
+  }
+
+  "it" should "upto String" in {
+    assert("a".upTo("c") == Seq("a","b","c"))
+  }
+
+  "it" should "increment date" in {
+    assert(LocalDate.of(2018, 5, 12).next == LocalDate.of(2018, 5, 13))
+    assert(LocalDate.of(2018, 5, 31).next == LocalDate.of(2018, 6, 1))
+  }
+
+  "it" should "increment DateString" in {
+    assert(DateString("20180514").next == DateString("20180515"))
+  }
+
+  "it" should "upTo DateString" in {
+    assert(DateString("20180530").upTo(DateString("20180601")) ==
+           Seq(DateString("20180530"),
+               DateString("20180531"),
+               DateString("20180601")))
+  }
+
+  "it" should "compare" in {
+    assert(1 <= 2)
+    assert("a" < "b")
+    assert(LocalDate.of(2018, 5, 13) < LocalDate.of(2018, 5, 14))
+    assert(DateString("20180513") < DateString("20180514"))
   }
 
   "it" should "work for any input type" in {
@@ -34,13 +60,6 @@ class IncrementableSpec extends FlatSpec with Matchers{
 
     val dateStr = DateString("20180512")
     assert(getNext(dateStr) == DateString("20180513"))
-  }
-
-  "it" should "compare" in {
-    assert(1 <= 2)
-    assert("a" < "b")
-    assert(LocalDate.of(2018, 5, 13) < LocalDate.of(2018, 5, 14))
-    assert(DateString("20180513") < DateString("20180514"))
   }
 
   "it" should "work for CLI app" in {
@@ -59,27 +78,15 @@ class IncrementableSpec extends FlatSpec with Matchers{
       *   -- inputType Int
       */
 
-    def getNext[T](src: Incrementable[T]): T = src.next()
-
-
-    def traverse[T](from: Incrementable[T], to: Incrementable[T])= {
-      var current = from
-//      while (from <= to){
-//        // etl.process(folder)
-//        current = getNext(from)
-//      }
-    }
-
-
     def main(args: Array[String]) = {
       val from      = "fromValue"  // extracted from args somehow
       val to        = "toValue"
       val inputType = "typeValue"
 
-      inputType match {
-        case "DateString" => traverse(DateString(from), DateString(to))
-        case "Int"        => traverse(from.toInt, to.toInt)
-        case y: String    => traverse(from, to)
+      val range = inputType match {
+        case "DateString" => DateString(from).upTo(DateString(to))
+        case "Int"        => from.toInt.upTo(to.toInt)
+        case y: String    => from.upTo(to)
       }
     }
   }
