@@ -6,7 +6,7 @@ import org.scalatest.{FlatSpec, Matchers}
 import util.IncrementorImpl._
 
 
-class IncrementorsSpec extends FlatSpec with Matchers{
+class IncrementableSpec extends FlatSpec with Matchers{
   "it" should "increment int" in {
     assert(1.next == 2)
   }
@@ -24,7 +24,7 @@ class IncrementorsSpec extends FlatSpec with Matchers{
   }
 
   "it" should "work for any input type" in {
-    def getNext[T](src: Incrementor[T]): T = src.next()
+    def getNext[T](src: Incrementable[T]): T = src.next()
 
     assert(getNext(1) == 2)
     assert(getNext("a") == "b")
@@ -59,10 +59,10 @@ class IncrementorsSpec extends FlatSpec with Matchers{
       *   -- inputType Int
       */
 
-    def getNext[T](src: Incrementor[T]): T = src.next()
+    def getNext[T](src: Incrementable[T]): T = src.next()
 
 
-    def traverse[T](from: Incrementor[T], to: Incrementor[T])= {
+    def traverse[T](from: Incrementable[T], to: Incrementable[T])= {
       var current = from
 //      while (from <= to){
 //        // etl.process(folder)

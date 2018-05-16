@@ -13,7 +13,7 @@ import util.IncrementorImpl.localdate
   *   DateString(str).toString    => "20180513"
   *   DateString(str).toLocalDate => LocalDate.of(2018, 5, 13)
   */
-case class DateString(str: String) extends OrderedIncrementor[DateString]{
+case class DateString(str: String) extends OrderedIncrementable[DateString]{
   override def next(): DateString = {
     val day2 = toLocalDate().next()
     val day2str = DateString.toString(day2)

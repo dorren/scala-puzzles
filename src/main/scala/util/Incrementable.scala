@@ -7,22 +7,22 @@ import java.util.Date
   * trait for incrementing variety type of objects, number, date, char, etc.
   *
   */
-trait Incrementor[T] {
+trait Incrementable[T] {
   def next(): T = ???
 }
 
-trait OrderedIncrementor[T] extends Incrementor[T] with Ordered[T]
+trait OrderedIncrementable[T] extends Incrementable[T] with Ordered[T]
 
 
 object IncrementorImpl {
   implicit def numeric(n: Int) = {
-    new Incrementor[Int] {
+    new Incrementable[Int] {
       override def next(): Int = n + 1
     }
   }
 
   implicit def localdate(date: LocalDate) = {
-    new OrderedIncrementor[LocalDate] {
+    new OrderedIncrementable[LocalDate] {
       override def next(): LocalDate = {
         date.plusDays(1)
       }
@@ -38,7 +38,7 @@ object IncrementorImpl {
   }
 
   implicit def string(str: String) = {
-    new Incrementor[String] {
+    new Incrementable[String] {
       /**
         * increment string.
         *   "a" => "b"
